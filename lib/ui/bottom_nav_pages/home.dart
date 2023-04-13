@@ -96,123 +96,132 @@ class _HomeState extends State<Home> {
             SizedBox(
               height: 10.h,
             ),
-            AspectRatio(
-              aspectRatio: 2.5,
-              child: CarouselSlider(
-                  items: _carouselImages
-                      .map((item) => Padding(
-                            padding: const EdgeInsets.only(left: 3, right: 3),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: NetworkImage(item),
-                                      fit: BoxFit.fitWidth)),
-                            ),
-                          ))
-                      .toList(),
-                  options: CarouselOptions(
-                      autoPlay: true,
-                      enlargeCenterPage: true,
-                      viewportFraction: 0.8,
-                      enlargeStrategy: CenterPageEnlargeStrategy.height,
-                      onPageChanged: (val, carouselPageChangedReason) {
-                        setState(() {
-                          _dotPosition = val;
-                        });
-                      })),
-            ),
-            SizedBox(
-              height: 10.h,
-            ),
-            DotsIndicator(
-              dotsCount:
-                  _carouselImages.length == 0 ? 1 : _carouselImages.length,
-              position: _dotPosition.toDouble(),
-              decorator: DotsDecorator(
-                activeColor: AppColors.deep_orange,
-                color: AppColors.deep_orange.withOpacity(0.5),
-                spacing: EdgeInsets.all(2),
-                activeSize: Size(8, 8),
-                size: Size(6, 6),
-              ),
-            ),
-            SizedBox(
-              height: 15.h,
-            ),
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: GridView.builder(
-                    scrollDirection: Axis.vertical,
-                    itemCount: _products.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 0.75,
-                      crossAxisSpacing: 10.0,
-                      mainAxisSpacing: 10.0,
-                    ),
-                    itemBuilder: (_, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (_) =>
-                                      ProductDetails(_products[index])));
-                        },
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15.0)),
-                          ),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(15.0),
-                                    child: Image.network(
-                                      _products[index]["product-img"][0],
-                                      height: 130.0,
-                                      width: 190.0,
-                                    )),
-                              ),
-                              // SizedBox(
-                              //   height: 10.h,
-                              // ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  "${_products[index]["product-name"]}",
-                                  maxLines: 1,
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10.h,
-                              ),
-                              Container(
-                                height: sizeHeight*5,
-                                width: sizeWidth*42,
-                                decoration: const BoxDecoration(
-                                  color: Color.fromARGB(255, 239, 247, 247),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10.0)),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                      "${_products[index]["product-price"].toString()} TMT", style: TextStyle(fontSize: 20),),
-                                ),
-                              ),
-                            ],
-                          ),
+              child: ListView(
+                children: [
+                  
+                        AspectRatio(
+                          aspectRatio: 2.5,
+                          child: CarouselSlider(
+                              items: _carouselImages
+                                  .map((item) => Padding(
+                                        padding: const EdgeInsets.only(left: 3, right: 3),
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: NetworkImage(item),
+                                                  fit: BoxFit.fitWidth)),
+                                        ),
+                                      ))
+                                  .toList(),
+                              options: CarouselOptions(
+                                  autoPlay: true,
+                                  enlargeCenterPage: true,
+                                  viewportFraction: 0.8,
+                                  enlargeStrategy: CenterPageEnlargeStrategy.height,
+                                  onPageChanged: (val, carouselPageChangedReason) {
+                                    setState(() {
+                                      _dotPosition = val;
+                                    });
+                                  })),
                         ),
-                      );
-                    }),
+                        
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    DotsIndicator(
+                      dotsCount:
+                          _carouselImages.length == 0 ? 1 : _carouselImages.length,
+                      position: _dotPosition.toDouble(),
+                      decorator: DotsDecorator(
+                        activeColor: AppColors.deep_orange,
+                        color: AppColors.deep_orange.withOpacity(0.5),
+                        spacing: EdgeInsets.all(2),
+                        activeSize: Size(8, 8),
+                        size: Size(6, 6),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: GridView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: _products.length,
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 0.75,
+                            crossAxisSpacing: 10.0,
+                            mainAxisSpacing: 10.0,
+                          ),
+                          itemBuilder: (_, index) {
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) =>
+                                            ProductDetails(_products[index])));
+                              },
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(15.0)),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(15.0),
+                                          child: Image.network(
+                                            _products[index]["product-img"][0],
+                                            height: 130.0,
+                                            width: 190.0,
+                                          )),
+                                    ),
+                                    // SizedBox(
+                                    //   height: 10.h,
+                                    // ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        "${_products[index]["product-name"]}",
+                                        maxLines: 1,
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10.h,
+                                    ),
+                                    Container(
+                                      height: sizeHeight*5,
+                                      width: sizeWidth*42,
+                                      decoration: const BoxDecoration(
+                                        color: Color.fromARGB(255, 239, 247, 247),
+                                        borderRadius:
+                                            BorderRadius.all(Radius.circular(10.0)),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                            "${_products[index]["product-price"].toString()} TMT", style: TextStyle(fontSize: 20),),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          }),
+                    ),
+                
+                ],
               ),
             ),
           ],
